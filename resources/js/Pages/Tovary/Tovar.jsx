@@ -14,7 +14,7 @@ export default function Tovar({ auth, tovar }) {
     const [productPrice, setProductPrice] = useState(tovar.price);
 
     async function fetchData() {
-        const response = await axios.get("/api/cart/" + auth.user.id).then(response => {return response.data.products});
+        const response = await axios.get("https://testing.loiri.com.ua/api/cart/" + auth.user.id).then(response => {return response.data.products});
         const products = response.filter((element) => {
             return element.product_id == tovar.id;
         });
@@ -42,7 +42,7 @@ export default function Tovar({ auth, tovar }) {
 
         const date = currentDate.addDays(5).toISOString().split("T")[0] + " " + currentDate.toISOString().split("T")[1].slice(0,8);
 
-        await axios.post("/api/orders/", {
+        await axios.post("https://testing.loiri.com.ua/api/orders/", {
             client_id: auth.user.id,
             total_price: productPrice,
             status: 'Очікує підтвердження',
@@ -61,11 +61,11 @@ export default function Tovar({ auth, tovar }) {
     async function addToCart(e, value) {
         e.preventDefault();
         if (cartActive == true) {
-            await axios.delete("/api/cart/" + auth.user.id + "/" + tovar.id);
+            await axios.delete("https://testing.loiri.com.ua/api/cart/" + auth.user.id + "/" + tovar.id);
             fetchData();
         }
         if (value == 0 && cartActive == false) {
-            await axios.post("/api/cart/", {
+            await axios.post("https://testing.loiri.com.ua/api/cart/", {
                 client_id: auth.user.id,
                 product_id: tovar.id,
                 product_count: productCount,
