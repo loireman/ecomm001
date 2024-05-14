@@ -14,38 +14,46 @@ export default function Tovar({ auth, tovar }) {
     const [productPrice, setProductPrice] = useState(tovar.price);
 
     async function fetchData() {
-        const response = await axios.get("/api/cart/" + auth.user.id).then(response => {return response.data.products});
+        const response = await axios
+            .get("/api/cart/" + auth.user.id)
+            .then((response) => {
+                return response.data.products;
+            });
         const products = response.filter((element) => {
             return element.product_id == tovar.id;
         });
         setCartActive(products.length != 0);
         if (products.length != 0) {
             setProductCount(products[0].product_count);
-            setProductPrice((products[0].product_count * tovar.price).toFixed(2));
+            setProductPrice(
+                (products[0].product_count * tovar.price).toFixed(2)
+            );
         }
     }
     useEffect(() => {
         fetchData();
     }, []);
 
-
     async function order(e) {
         e.preventDefault();
 
-        Date.prototype.addDays = function(days) {
+        Date.prototype.addDays = function (days) {
             var currentDate = new Date(this.valueOf());
             currentDate.setDate(currentDate.getDate() + days);
             return currentDate;
-        }
+        };
 
         var currentDate = new Date();
 
-        const date = currentDate.addDays(5).toISOString().split("T")[0] + " " + currentDate.toISOString().split("T")[1].slice(0,8);
+        const date =
+            currentDate.addDays(5).toISOString().split("T")[0] +
+            " " +
+            currentDate.toISOString().split("T")[1].slice(0, 8);
 
-        await axios.post("/api/orders/", {
+        const data = {
             client_id: auth.user.id,
             total_price: productPrice,
-            status: 'Очікує підтвердження',
+            status: "Очікує підтвердження",
             arrival: date,
             products: JSON.stringify([
                 {
@@ -54,33 +62,45 @@ export default function Tovar({ auth, tovar }) {
                     product_price: productPrice,
                 },
             ]),
-        });
-        window.location.replace(route('dashboard'))
-    };
+        };
+
+        fetch("/api/orders/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then(() => {
+                window.location.replace(route("dashboard"));
+            })
+            .catch((error) => console.log(error));
+    }
 
     async function addToCart(e, value) {
         e.preventDefault();
         if (cartActive == true) {
             await axios({
-                method: 'DELETE',
-                url: "/api/cart/" + auth.user.id + "/" + tovar.id
+                method: "DELETE",
+                url: "/api/cart/" + auth.user.id + "/" + tovar.id,
             });
             fetchData();
         }
         if (value == 0 && cartActive == false) {
             await axios({
-                method: 'POST',
+                method: "POST",
                 url: "/api/cart/",
                 data: {
                     client_id: auth.user.id,
                     product_id: tovar.id,
                     product_count: productCount,
                     product_price: productPrice,
-                }
+                },
             });
             fetchData();
         } else if (value > 0) {
-            const count = value == 1 ? productCount - 1 : productCount + 1
+            const count = value == 1 ? productCount - 1 : productCount + 1;
             setProductCount(count);
             setProductPrice((count * tovar.price).toFixed(2));
         }
@@ -152,7 +172,9 @@ export default function Tovar({ auth, tovar }) {
                                         </span>
                                     </button>
                                 </div>
-                                <span className="font-bold text-2xl">Остаточна ціна: {productPrice}</span>
+                                <span className="font-bold text-2xl">
+                                    Остаточна ціна: {productPrice}
+                                </span>
                                 <div className="flex items-stretch gap-3">
                                     <PrimaryButton onClick={order}>
                                         <span className="text-[0.9rem]">
