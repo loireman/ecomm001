@@ -64,7 +64,7 @@ export default function Tovar({ auth, tovar }) {
             ]),
         };
 
-        fetch("/api/orders/", {
+        fetch("/api/orders", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -127,7 +127,7 @@ export default function Tovar({ auth, tovar }) {
                             <div className="mt-3 ml-5 text-xl font-medium">
                                 Ціна: ${tovar.price}
                             </div>
-                            <div className="ml-5 text-xl font-medium">
+                            <div className="ml-5 text-xl font-medium hidden">
                                 Тип: {tovar.property1}
                             </div>
                             <div className="ml-5 text-xl font-medium">
@@ -206,9 +206,9 @@ export default function Tovar({ auth, tovar }) {
                             </div>
                         </div>
                         <img
-                            src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-                            alt="Front of men&#039;s Basic Tee in black."
-                            class="h=full aspect-square md:h-96 object-cover object-center lg:h-[36rem]"
+                            src="/img/gps.png"
+                            alt="123."
+                            class="h-full aspect-square md:h-96 object-contain object-center lg:h-[36rem]"
                         />
                     </div>
                 </div>
