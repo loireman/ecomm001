@@ -90,7 +90,7 @@ export default function Tovar({ auth, tovar }) {
         if (value == 0 && cartActive == false) {
             await axios({
                 method: "POST",
-                url: "/api/cart/",
+                url: "/api/cart",
                 data: {
                     client_id: auth.user.id,
                     product_id: tovar.id,

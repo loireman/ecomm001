@@ -49,7 +49,7 @@ export default function Dashboard({ auth }) {
         const date = currentDate.addDays(5).toISOString().split("T")[0] + " " + currentDate.toISOString().split("T")[1].slice(0,8);
 
 
-        axios.post("/api/orders/", {
+        axios.post("/api/orders", {
             client_id: auth.user.id,
             total_price: totalPrice,
             status: 'Очікує підтвердження',
