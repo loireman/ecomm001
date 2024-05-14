@@ -117,7 +117,7 @@ export default function Tovar({ auth, tovar }) {
         >
             <Head title="Інформація про товар" />
 
-            <div className="py-12">
+            <div className="py-12 grid gap-6 xl:flex xl:gap-0">
                 <div className="max-w-5xl sm:px-9s lg:px-8">
                     <div className="flex max-md:flex-col-reverse justify-between bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg text-gray-900 dark:text-gray-100">
                         <div className="p-6">
@@ -205,11 +205,22 @@ export default function Tovar({ auth, tovar }) {
                                 </div>
                             </div>
                         </div>
-                        <img
-                            src="/img/gps.png"
-                            alt="123."
-                            class="h-full aspect-square md:h-96 object-contain object-center lg:h-[36rem]"
-                        />
+                    </div>
+                </div>
+                <div className="max-w-5xl sm:px-9s lg:px-8">
+                    <div className="flex max-md:flex-col-reverse justify-between bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg text-gray-900 dark:text-gray-100">
+                        <div className="p-6">
+                            <img
+                                src="/img/gps.png"
+                                alt="123."
+                                class="h-full w-full aspect-square md:h-96 object-contain object-center lg:h-[36rem]"
+                            />
+                            <span className="font-semibold text-lg">Опис</span>
+                            <br />
+                            <span className="whitespace-pre-wrap">
+                                {tovar.body}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

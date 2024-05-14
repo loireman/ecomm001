@@ -91,7 +91,7 @@ export default function Dashboard({ auth }) {
                                                     key={p.id}
                                                 >
                                                     <img
-                                                        src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
+                                                        src="/img/gps.png"
                                                         alt="Front of men&#039;s Basic Tee in black."
                                                         class="object-cover object-center rounded-md"
                                                     />
