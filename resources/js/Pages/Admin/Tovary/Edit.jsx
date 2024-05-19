@@ -5,6 +5,8 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/Admin/AdminLayout";
 import { Head, useForm } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
+import FileInputDropdown from "@/Components/FileInputDropdown";
+import { useState } from "react";
 
 export default function EditTovary({ auth, tovaries }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -14,12 +16,62 @@ export default function EditTovary({ auth, tovaries }) {
         property1: tovaries.property1,
         property2: tovaries.property2,
         body: tovaries.body,
+        photo_path: tovaries.photo_path ? JSON.parse(tovaries.photo_path) : [],
     });
 
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
 
-        Inertia.put(route("tovary.update", { tovary: tovaries }), data);
+        const photos = [];
+
+        // Map each item in data.photo_path to a Promise
+        const promises = data.photo_path.map(async (fileOrPath) => {
+            if (typeof fileOrPath === "string") {
+                // If it's a string, push it directly
+                photos.push(fileOrPath);
+            } else {
+                try {
+                    // If it's a file, upload it and push the uploaded path
+                    const uploadedPath = await uploadFile(fileOrPath);
+                    photos.push(uploadedPath);
+                } catch (error) {
+                    console.error("Failed to upload file:", error);
+                    // Handle error if needed
+                }
+            }
+        });
+
+        // Wait for all promises to resolve
+        await Promise.all(promises);
+
+        // After all asynchronous operations are completed, proceed with the Inertia.put call
+        Inertia.put(route("tovary.update", { tovary: tovaries }), {
+            name: data.name,
+            price: data.price,
+            slug: data.slug,
+            property1: data.property1,
+            property2: data.property2,
+            body: data.body,
+            photo_path: JSON.stringify(photos),
+        });
+    };
+
+    const uploadFile = async (file) => {
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const response = await axios.post("/api/upload-file", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            return await response.data.path;
+        } catch (error) {
+            console.error("File upload failed:", error);
+            throw error;
+        }
     };
 
     return (
@@ -40,6 +92,16 @@ export default function EditTovary({ auth, tovaries }) {
                             Оновити товар
                         </span>
                         <form className="px-4 py-8" onSubmit={submit}>
+                            <InputLabel
+                                htmlFor="filedropdown"
+                                value="Додати фото"
+                            />
+                            <FileInputDropdown
+                                selectedFiles={data.photo_path}
+                                setSelectedFiles={(e) =>
+                                    setData("photo_path", e)
+                                }
+                            />
                             <InputLabel htmlFor="name" value="Назва" />
                             <TextInput
                                 id="name"

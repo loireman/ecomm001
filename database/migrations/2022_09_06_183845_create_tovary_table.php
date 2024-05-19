@@ -20,7 +20,7 @@ class CreateTovaryTable extends Migration
             $table->string('slug');
             $table->integer('property1');
             $table->smallInteger('property2');
-            $table->decimal('price', 6, 2);
+            $table->decimal('price', 7, 2);
             $table->timestamps();
         });
     }

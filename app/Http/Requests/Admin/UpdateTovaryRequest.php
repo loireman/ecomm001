@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 
 class UpdateTovaryRequest extends FormRequest
 {
@@ -23,14 +24,16 @@ class UpdateTovaryRequest extends FormRequest
      */
     public function rules()
     {
-
-        return [
-            'name' => 'required|string|max:255|unique:tovaries,name,'.$this->tovary,
+        $rules = [
+            'name' => 'required|string|max:255|unique:tovaries,name,' . $this->tovary,
             'body' => 'required',
-            'slug' => ['required', 'string', 'max:63', 'unique:tovaries,slug,'.$this->tovary],
+            'slug' => ['required', 'string', 'max:63', 'unique:tovaries,slug,' . $this->tovary],
             'property1' => 'required|integer|min:0|max:1024',
             'property2' => 'required|integer|min:0|max:128',
-            'price' => 'required|numeric|between:0,9999.99'
+            'price' => 'required|numeric|between:0,99999.99',
+            'photo_path' => 'nullable|string'
         ];
+
+        return $rules;
     }
 }

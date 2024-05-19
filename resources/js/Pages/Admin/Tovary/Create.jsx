@@ -1,9 +1,11 @@
+import FileInputDropdown from "@/Components/FileInputDropdown";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/Admin/AdminLayout";
 import { Head, useForm } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function CreateTovary({ auth }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -13,7 +15,9 @@ export default function CreateTovary({ auth }) {
         property1: 0,
         property2: 0,
         body: "",
+        photo_path: [],
     });
+
 
     const submit = (e) => {
         e.preventDefault();
@@ -43,6 +47,11 @@ export default function CreateTovary({ auth }) {
                             Створити товар
                         </span>
                         <form className="px-4 py-8" onSubmit={submit}>
+                            <InputLabel
+                                htmlFor="filedropdown"
+                                value="Додати фото"
+                            />
+                            <FileInputDropdown selectedFiles={data.photo_path} setSelectedFiles={(e) => setData("photo_path", e)} />
                             <InputLabel htmlFor="name" value="Назва" />
                             <TextInput
                                 id="name"

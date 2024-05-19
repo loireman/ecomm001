@@ -7,6 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Dashboard from "../Dashboard";
 import { Inertia } from "@inertiajs/inertia";
+import PhotoSlider from "@/Components/PhotoSlider";
 
 export default function Tovar({ auth, tovar }) {
     const [cartActive, setCartActive] = useState(false);
@@ -101,8 +102,11 @@ export default function Tovar({ auth, tovar }) {
             fetchData();
         } else if (value > 0) {
             const count = value == 1 ? productCount - 1 : productCount + 1;
-            setProductCount(count);
-            setProductPrice((count * tovar.price).toFixed(2));
+
+            if (count >= 1 && count <= tovar.property2) {
+                setProductCount(count);
+                setProductPrice((count * tovar.price).toFixed(2));
+            }
         }
     }
 
@@ -118,9 +122,9 @@ export default function Tovar({ auth, tovar }) {
             <Head title="Інформація про товар" />
 
             <div className="py-12 grid gap-6 xl:flex xl:gap-0">
-                <div className="max-w-5xl sm:px-9s lg:px-8">
+                <div className="xl:max-w-3xl w-full sm:px-9s lg:px-8">
                     <div className="flex max-md:flex-col-reverse justify-between bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg text-gray-900 dark:text-gray-100">
-                        <div className="p-6">
+                        <div className="p-6 w-full">
                             <div className="p-6 font-bold text-2xl">
                                 {tovar.name}
                             </div>
@@ -184,13 +188,13 @@ export default function Tovar({ auth, tovar }) {
                                     <button
                                         onClick={(e) => addToCart(e, 0)}
                                         className={
-                                            "grid content-center justify-center aspect-square px-2 h-full rounded-md text-gray-200 border " +
+                                            "grid content-center justify-center aspect-square px-2 mx-2 h-full rounded-md text-gray-200 border" +
                                             (cartActive === true
                                                 ? "bg-green-600 dark:bg-green-700 hover:bg-green-500 dark:hover:bg-green-600 border-green-600"
                                                 : "bg-orange-600 dark:bg-orange-700 hover:bg-orange-500 dark:hover:bg-orange-600 border-orange-600")
                                         }
                                     >
-                                        <span className="text-base">
+                                        <span className="text-base xl:p-2">
                                             <Icon
                                                 icon={
                                                     cartActive === true
@@ -207,14 +211,18 @@ export default function Tovar({ auth, tovar }) {
                         </div>
                     </div>
                 </div>
-                <div className="max-w-5xl sm:px-9s lg:px-8">
+                <div className="xl:max-w-6xl w-full sm:px-9s lg:px-8">
                     <div className="flex max-md:flex-col-reverse justify-between bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg text-gray-900 dark:text-gray-100">
-                        <div className="p-6">
-                            <img
-                                src="/img/gps.png"
-                                alt="123."
-                                class="h-full w-full aspect-square md:h-96 object-contain object-center lg:h-[36rem]"
-                            />
+                        <div className="p-6 w-full">
+                            {tovar.photo_path ? (
+                                <PhotoSlider photos={JSON.parse(tovar.photo_path)} />
+                            ) : (
+                                <img
+                                    src="/img/gps.png"
+                                    alt="123."
+                                    class="h-full w-full aspect-square md:h-96 object-contain object-center lg:h-[36rem]"
+                                />
+                            )}
                             <span className="font-semibold text-lg">Опис</span>
                             <br />
                             <span className="whitespace-pre-wrap">

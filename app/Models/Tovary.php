@@ -21,5 +21,6 @@ class Tovary extends Model
         'property1',
         'property2',
         'price',
+        'photo_path',
     ];
 }

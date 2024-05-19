@@ -27,6 +27,20 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/blog', function () {
+    return Inertia::render('Blog/Index', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name('blog');
+
+Route::get('/news', function () {
+    return Inertia::render('News/Index', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name('news');
+
 Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
     'prefix'     => 'admin',
