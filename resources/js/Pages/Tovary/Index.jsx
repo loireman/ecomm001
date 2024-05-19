@@ -111,11 +111,22 @@ export default function Index({ auth, tovaries }) {
                         {tovaries.data.map((element) => (
                             <div class="group relative">
                                 <div class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 dark:bg-gray-700 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                                    <img
-                                        src="/img/gps.png"
-                                        alt="123."
-                                        class="h-full w-full object-contain object-center lg:h-full lg:w-full"
-                                    />
+                                    {element.photo_path ? (
+                                        <img
+                                            src={
+                                                "/" +
+                                                JSON.parse(element.photo_path)[0]
+                                            }
+                                            alt="123."
+                                            class="h-full w-full object-contain object-center lg:h-full lg:w-full"
+                                        />
+                                    ) : (
+                                        <img
+                                            src="/img/gps.png"
+                                            alt="123."
+                                            class="h-full w-full object-contain object-center lg:h-full lg:w-full"
+                                        />
+                                    )}
                                 </div>
                                 <div class="mt-4 flex justify-between">
                                     <div>
