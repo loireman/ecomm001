@@ -4,7 +4,61 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
-            <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+            <div className="relative pt-28 pb-20 max-lg:flex-col-reverse flex lg:justify-center lg:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+                <div className="absolute top-4 left-4">
+                    <div className="flex items-center space-x-4 px-4 py-2">
+                        {auth.user ? (
+                            <Link
+                                href={route("dashboard")}
+                                className="font-bold text-white hover:text-red-500 dark:text-white dark:hover:text-blue-500"
+                            >
+                                Логін
+                            </Link>
+                        ) : (
+                            <>
+                                <Link
+                                    href={route("login")}
+                                    className="font-bold text-white hover:text-red-500 dark:text-white dark:hover:text-blue-500"
+                                >
+                                    Логін
+                                </Link>
+                                <Link
+                                    href={route("register")}
+                                    className="font-bold text-white hover:text-red-500 dark:text-white dark:hover:text-blue-500"
+                                >
+                                    Реєстрація
+                                </Link>
+                            </>
+                        )}
+                    </div>
+                    <div className="flex items-center space-x-4 px-4 py-2">
+                        <Link
+                            href="/products"
+                            className="font-bold text-black dark:text-white hover:text-red-500 dark:hover:text-blue-500"
+                        >
+                            Продукція
+                        </Link>
+                        <Link
+                            href="/news"
+                            className="font-bold text-black dark:text-white hover:text-red-500 dark:hover:text-blue-500"
+                        >
+                            Новини
+                        </Link>
+                        <Link
+                            href="/blog"
+                            className="font-bold text-black dark:text-white hover:text-red-500 dark:hover:text-blue-500"
+                        >
+                            Блог
+                        </Link>
+                        <Link
+                            href="/dashboard"
+                            className="font-bold text-black dark:text-white hover:text-red-500 dark:hover:text-blue-500"
+                        >
+                            Головна
+                        </Link>
+                    </div>
+                </div>
+
                 <div className="container">
                     <div className="offer mt-[-30] text-black dark:text-white">
                         <h1 className="font-bold text-4xl mt-5 ml-10">
@@ -37,64 +91,13 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </a>
                         </div>
                     </div>
-                    <div className="sm:fixed sm:top-10 sm:left-0 sm:flex items-center space-x-4 p-6 ml-14">
-                        <Link
-                            href="/products"
-                            className="font-bold text-black dark:text-white hover:text-red-500 dark:hover:text-blue-500"
-                        >
-                            Продукція
-                        </Link>
-                        <Link
-                            href="/news"
-                            className="font-bold text-black dark:text-white hover:text-red-500 dark:hover:text-blue-500"
-                        >
-                            Новини
-                        </Link>
-                        <Link
-                            href="/blog"
-                            className="font-bold text-black dark:text-white hover:text-red-500 dark:hover:text-blue-500"
-                        >
-                            Блог
-                        </Link>
-                        <Link
-                            href="/dashboard"
-                            className="font-bold text-black dark:text-white hover:text-red-500 dark:hover:text-blue-500"
-                        >
-                            Головна
-                        </Link>
-                    </div>
-                    <div className="sm:fixed sm:top-0 sm:left-0 sm:flex items-center space-x-4 p-6 ml-14">
-                        {auth.user ? (
-                            <Link
-                                href={route("dashboard")}
-                                className="font-bold text-white hover:text-red-500 dark:text-white dark:hover:text-blue-500"
-                            >
-                                Логін
-                            </Link>
-                        ) : (
-                            <>
-                                <Link
-                                    href={route("login")}
-                                    className="font-bold text-white hover:text-red-500 dark:text-white dark:hover:text-blue-500"
-                                >
-                                    Логін
-                                </Link>
-                                <Link
-                                    href={route("register")}
-                                    className="font-bold text-white hover:text-red-500 dark:text-white dark:hover:text-blue-500"
-                                >
-                                    Реєстрація
-                                </Link>
-                            </>
-                        )}
-                    </div>
+                    
                 </div>
-
-                <div className="h-full grid align-content-center">
+                <div className="h-full max-lg:w-full grid align-content-center">
                     <img
                         src="/img/gps.png"
                         alt="background"
-                        className="h-fit max-w-2xl"
+                        className="max-lg:max-h-80 h-full w-full object-contain"
                     />
                 </div>
             </div>
