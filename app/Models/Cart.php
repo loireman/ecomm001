@@ -15,4 +15,9 @@ class Cart extends Model
         'product_count',
         'product_price'
     ];
+
+    public function product()
+    {
+        return $this->hasOne(Tovary::class, 'id', 'product_id');
+    }
 }

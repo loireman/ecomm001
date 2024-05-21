@@ -65,7 +65,7 @@ Route::group([
     'prefix' => 'products',
 ], function() {
     Route::get('/', [TovaryController::class, 'index'])->name('products');
-    Route::get('/{slug}', [TovarController::class, 'index']);
+    Route::get('/{slug}', [TovarController::class, 'index'])->name('product');
 });
 
 Route::middleware('auth')->group(function () {

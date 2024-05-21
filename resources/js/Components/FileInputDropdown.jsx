@@ -25,11 +25,11 @@ function FileInputDropdown({ selectedFiles, setSelectedFiles }) {
     return (
         <div className="file-input-dropdown">
             <div
-                className="file-input-container"
+                className="file-input-container "
                 onDrop={handleDrop}
                 onDragOver={(e) => e.preventDefault()}
             >
-                <label htmlFor="file-input" className="file-input-label">
+                <label htmlFor="file-input" className="file-input-label border-gray-600 dark:border-gray-300 border-dashed border-2 rounded-xl ">
                     Select or Drop Files
                 </label>
                 <input
@@ -57,6 +57,7 @@ function FileInputDropdown({ selectedFiles, setSelectedFiles }) {
                             )}
                             <button onClick={() => removeFile(index)}>
                                 <svg
+                                className="fill-gray-600 dark:fill-gray-300"
                                     viewBox="0 0 12 12"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"

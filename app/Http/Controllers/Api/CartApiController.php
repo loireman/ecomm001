@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class CartApiController extends Controller
 {
     public function index($id) {
-        $products = Cart::where('client_id', $id)->get();
+        $products = Cart::where('client_id', $id)->with('product')->get();
         $sum = 0;
         foreach ($products as $product)
         {

@@ -36,28 +36,32 @@ export default function Dashboard({ auth }) {
     }
 
     async function order(e) {
-        e.preventDefault()
+        e.preventDefault();
 
-        Date.prototype.addDays = function(days) {
+        Date.prototype.addDays = function (days) {
             var currentDate = new Date(this.valueOf());
             currentDate.setDate(currentDate.getDate() + days);
             return currentDate;
-        }
+        };
 
         var currentDate = new Date();
 
-        const date = currentDate.addDays(5).toISOString().split("T")[0] + " " + currentDate.toISOString().split("T")[1].slice(0,8);
-
+        const date =
+            currentDate.addDays(5).toISOString().split("T")[0] +
+            " " +
+            currentDate.toISOString().split("T")[1].slice(0, 8);
 
         axios.post("/api/orders", {
             client_id: auth.user.id,
             total_price: totalPrice,
-            status: 'Очікує підтвердження',
+            status: "Очікує підтвердження",
             arrival: date,
             products: JSON.stringify(Cart),
         });
-        Cart.map(p => {deleteFromCart(e, p.product_id)})
-        fetchOrders()
+        Cart.map((p) => {
+            deleteFromCart(e, p.product_id);
+        });
+        fetchOrders();
     }
 
     useEffect(() => {
@@ -86,20 +90,34 @@ export default function Dashboard({ auth }) {
                                     <div className="w-full flex flex-col-reverse justify-center">
                                         <div className="flex gap-3 w-[calc(88vw)] max-w-6xl items-center overflow-x-scroll">
                                             {Cart.reverse().map((p) => (
-                                                <div
-                                                    className="grid p-3 items-center h-96 w-48 rounded-lg border border-gray-600"
+                                                <a
+                                                    href={route('product', p.product.slug)}
+                                                    className="grid p-3 items-center h-96 w-48 rounded-lg border border-gray-600 hover:bg-slate-600 transition-all duration-200"
                                                     key={p.id}
                                                 >
-                                                    <img
-                                                        src="/img/gps.png"
-                                                        alt="Front of men&#039;s Basic Tee in black."
-                                                        class="object-cover object-center rounded-md"
-                                                    />
+                                                    {p.product.photo_path ? (
+                                                        <img
+                                                            src={
+                                                                "/" +
+                                                                JSON.parse(
+                                                                    p.product.photo_path
+                                                                )[0]
+                                                            }
+                                                            alt="123."
+                                                            class="h-full w-full object-contain object-center rounded-lg lg:h-full lg:w-full"
+                                                        />
+                                                    ) : (
+                                                        <img
+                                                            src="/img/gps.png"
+                                                            alt="123."
+                                                            class="h-full w-full object-contain object-center lg:h-full lg:w-full"
+                                                        />
+                                                    )}
                                                     <span className="font-bold text-2xl">
                                                         ${p.product_price}
                                                     </span>
                                                     <span className="mt-1 font-bold text-xl">
-                                                        Id: {p.product_id}
+                                                        {p.product.name}
                                                     </span>
                                                     <span className="font-bold text-xl">
                                                         К-сть: {p.product_count}
@@ -115,7 +133,7 @@ export default function Dashboard({ auth }) {
                                                     >
                                                         Прибрати
                                                     </PrimaryButton>
-                                                </div>
+                                                </a>
                                             ))}
                                         </div>
                                         <div className="border border-gray-600 p-6 rounded-lg my-3 flex max-sm:flex-col justify-between items-center gap-6">
@@ -123,7 +141,9 @@ export default function Dashboard({ auth }) {
                                                 Загальна ціна: {totalPrice}
                                             </span>
                                             <PrimaryButton onClick={order}>
-                                                <span className="text-lg">Замовити</span>
+                                                <span className="text-lg">
+                                                    Замовити
+                                                </span>
                                             </PrimaryButton>
                                         </div>
                                     </div>
@@ -151,26 +171,29 @@ export default function Dashboard({ auth }) {
                             <div className="flex gap-3 items-center p-6">
                                 {(ordersActive && (
                                     <div className="flex gap-3 w-[calc(88vw)] max-w-6xl items-center overflow-x-scroll">
-                                    {Orders.sort((a, b) => b.id - a.id).map((order) => (
-                                        <div
-                                            className="grid p-3 items-center h-96 w-48 rounded-lg border border-gray-600"
-                                            key={order.id}
-                                        >
-                                            <span className="font-bold text-2xl">
-                                            Ордер: №{order.id}
-                                            </span>
-                                            <span className="font-bold text-xl">
-                                            ${order.total_price}
-                                            </span>
-                                            <span className="font-bold text-xl">
-                                                Статус доставки: {order.status}
-                                            </span>
-                                            <span className="font-bold text-xl">
-                                                Прибуде: {order.arrival}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
+                                        {Orders.sort((a, b) => b.id - a.id).map(
+                                            (order) => (
+                                                <div
+                                                    className="grid p-3 items-center h-96 w-48 rounded-lg border border-gray-600"
+                                                    key={order.id}
+                                                >
+                                                    <span className="font-bold text-2xl">
+                                                        Ордер: №{order.id}
+                                                    </span>
+                                                    <span className="font-bold text-xl">
+                                                        ${order.total_price}
+                                                    </span>
+                                                    <span className="font-bold text-xl">
+                                                        Статус доставки:{" "}
+                                                        {order.status}
+                                                    </span>
+                                                    <span className="font-bold text-xl">
+                                                        Прибуде: {order.arrival}
+                                                    </span>
+                                                </div>
+                                            )
+                                        )}
+                                    </div>
                                 )) || (
                                     <div className="m-auto grid gap-3">
                                         <span>
