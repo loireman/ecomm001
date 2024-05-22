@@ -18,7 +18,9 @@ export default function Authenticated({ user, header, children }) {
                             width="32"
                             className="fill-gray-400"
                         ></ApplicationLogo>
-                        <span className="ml-2 text-sm font-bold">Admin page</span>
+                        <span className="ml-2 text-sm font-bold">
+                            Admin page
+                        </span>
                     </button>
                     <div className="w-full px-2">
                         <div className="flex flex-col items-center w-full mt-3 border-t border-gray-700">
@@ -77,6 +79,32 @@ export default function Authenticated({ user, header, children }) {
                                 ></Icon>
                                 <span className="ml-2 text-sm font-medium">
                                     Orders
+                                </span>
+                            </VerticalNavLink>
+                            <VerticalNavLink
+                                href={route("news.index")}
+                                active={route().current("news.index")}
+                            >
+                                <Icon
+                                    width={24}
+                                    height={24}
+                                    icon="mdi:newspaper-variant"
+                                ></Icon>
+                                <span className="ml-2 text-sm font-medium">
+                                    News
+                                </span>
+                            </VerticalNavLink>
+                            <VerticalNavLink
+                                href={route("blogs.index")}
+                                active={route().current("blogs.index")}
+                            >
+                                <Icon
+                                    width={24}
+                                    height={24}
+                                    icon="mdi:instagram"
+                                ></Icon>
+                                <span className="ml-2 text-sm font-medium">
+                                    Blogs
                                 </span>
                             </VerticalNavLink>
                         </div>
@@ -161,7 +189,9 @@ export default function Authenticated({ user, header, children }) {
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                         />
-                        <span className="ml-2 text-sm font-medium">На головну</span>
+                        <span className="ml-2 text-sm font-medium">
+                            На головну
+                        </span>
                     </a>
                 </div>
             ) : (
@@ -222,6 +252,26 @@ export default function Authenticated({ user, header, children }) {
                                 width={24}
                                 height={24}
                                 icon="mdi:order-bool-descending-variant"
+                            ></Icon>
+                        </VerticalNavLink>
+                        <VerticalNavLink
+                            href={route("news.index")}
+                            active={route().current("news.index")}
+                        >
+                            <Icon
+                                width={24}
+                                height={24}
+                                icon="mdi:newspaper-variant"
+                            ></Icon>
+                        </VerticalNavLink>
+                        <VerticalNavLink
+                            href={route("blogs.index")}
+                            active={route().current("blogs.index")}
+                        >
+                            <Icon
+                                width={24}
+                                height={24}
+                                icon="mdi:instagram"
                             ></Icon>
                         </VerticalNavLink>
                     </div>

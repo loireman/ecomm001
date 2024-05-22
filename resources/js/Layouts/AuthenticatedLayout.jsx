@@ -39,16 +39,16 @@ export default function Authenticated({ user = null, header, children }) {
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink
-                                    href={route("news")}
-                                    active={route().current("news")}
+                                    href={route("user.news")}
+                                    active={route().current("user.news")}
                                 >
                                     Новини
                                 </NavLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink
-                                    href={route("blog")}
-                                    active={route().current("blog")}
+                                    href={route("user.blogs")}
+                                    active={route().current("user.blogs")}
                                 >
                                     Блог
                                 </NavLink>
@@ -184,16 +184,16 @@ export default function Authenticated({ user = null, header, children }) {
                     </div>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            href={route("news")}
-                            active={route().current("news")}
+                            href={route("user.news")}
+                            active={route().current("user.news")}
                         >
                             Новини
                         </ResponsiveNavLink>
                     </div>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            href={route("blog")}
-                            active={route().current("blog")}
+                            href={route("user.blogs")}
+                            active={route().current("user.blogs")}
                         >
                             Блог
                         </ResponsiveNavLink>

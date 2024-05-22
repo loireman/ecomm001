@@ -24,7 +24,7 @@ class UpdateTovaryRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
+        return [
             'name' => 'required|string|max:255|unique:tovaries,name,' . $this->tovary,
             'body' => 'required',
             'slug' => ['required', 'string', 'max:63', 'unique:tovaries,slug,' . $this->tovary],
@@ -33,7 +33,5 @@ class UpdateTovaryRequest extends FormRequest
             'price' => 'required|numeric|between:0,99999.99',
             'photo_path' => 'nullable|string'
         ];
-
-        return $rules;
     }
 }

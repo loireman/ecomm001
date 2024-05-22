@@ -47,7 +47,7 @@ class TovaryController extends Controller
         } else {
             $tovaries->latest();
         }
-        $tovaries = $tovaries->paginate(10)->onEachSide(2)->appends(request()->query());
+        $tovaries = $tovaries->paginate(10)->appends(request()->query());
         return Inertia::render('Admin/Tovary/Index', [
             'tovaries' => $tovaries,
             'filters' => request()->all('search'),

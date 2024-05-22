@@ -5,7 +5,7 @@ import Pagination from "@/Components/Pagination";
 import { Icon } from "@iconify/react";
 import Dropdown from "@/Components/Dropdown";
 
-export default function Index({ auth }) {
+export default function Index({ auth, news }) {
     const [search, setSearch] = useState("");
 
     const handleClick = (search) => {
@@ -107,11 +107,51 @@ export default function Index({ auth }) {
                             </Dropdown.Content>
                         </Dropdown>
                     </div>
-                    
-                    {/* <Pagination
-                        nameContent="товари"
-                        pageContent={products}
-                    ></Pagination> */}
+                    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 xl:gap-x-8 p-4 overflow-hidden shadow-sm sm:rounded-lg text-gray-900 dark:text-gray-100">
+                        {news.data.map((element) => (
+                            <div class="group relative">
+                                <div class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 dark:bg-gray-700 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                    {element.photo_path ? (
+                                        <img
+                                            src={
+                                                "/" +
+                                                JSON.parse(element.photo_path)[0]
+                                            }
+                                            alt="123."
+                                            class="h-full w-full object-contain object-center lg:h-full lg:w-full"
+                                        />
+                                    ) : (
+                                        <img
+                                            src="/img/gps.png"
+                                            alt="123."
+                                            class="h-full w-full object-contain object-center lg:h-full lg:w-full"
+                                        />
+                                    )}
+                                </div>
+                                <div class="mt-4 flex justify-between">
+                                    <div>
+                                        <h3 class="text-xl text-gray-700 dark:text-gray-100">
+                                            <a
+                                                href={
+                                                    "/news/" + element.slug
+                                                }
+                                            >
+                                                <span
+                                                    aria-hidden="true"
+                                                    class="absolute inset-0"
+                                                ></span>
+                                                {element.name}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <Pagination
+                        nameContent="новини"
+                        pageContent={news}
+                    ></Pagination>
                 </div>
             </div>
         </AuthenticatedLayout>

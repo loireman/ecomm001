@@ -38,7 +38,15 @@ class BasicAdminPermissionSeeder extends Seeder
             'tovary create',
             'tovary edit',
             'tovary delete',
-         ];
+            'news list',
+            'news create',
+            'news edit',
+            'news delete',
+            'blogs list',
+            'blogs create',
+            'blogs edit',
+            'blogs delete',
+        ];
 
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);

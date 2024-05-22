@@ -3,6 +3,8 @@
 use App\Http\Controllers\TovaryController;
 use App\Http\Controllers\TovarController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\BlogController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,20 +29,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/blog', function () {
-    return Inertia::render('Blog/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-})->name('blog');
-
-Route::get('/news', function () {
-    return Inertia::render('News/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-})->name('news');
-
 Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
     'prefix'     => 'admin',
@@ -54,6 +42,8 @@ Route::group([
     Route::resource('user', 'UserController');
     Route::resource('tovary', 'TovaryController');
     Route::resource('orders', 'OrderController');
+    Route::resource('news', 'NewsController');
+    Route::resource('blogs', 'BlogController');
 });
 
 Route::get('/dashboard', function () {
@@ -66,6 +56,22 @@ Route::group([
 ], function() {
     Route::get('/', [TovaryController::class, 'index'])->name('products');
     Route::get('/{slug}', [TovarController::class, 'index'])->name('product');
+});
+
+Route::group([
+    'middleware'=> ['auth', 'verified'],
+    'prefix' => 'blog',
+], function() {
+    Route::get('/', [BlogController::class, 'index'])->name('user.blogs');
+    Route::get('/{slug}', [BlogController::class, 'blog'])->name('user.blog');
+});
+
+Route::group([
+    'middleware'=> ['auth', 'verified'],
+    'prefix' => 'news',
+], function() {
+    Route::get('/', [NewsController::class, 'index'])->name('user.news');
+    Route::get('/{slug}', [NewsController::class, 'article'])->name('user.article');
 });
 
 Route::middleware('auth')->group(function () {
